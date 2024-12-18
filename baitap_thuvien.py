@@ -19,12 +19,6 @@ def luu_thong_tin():
     if not khachhang.get() and not nhacungcap.get():
         messagebox.showerror("Lỗi", "Vui lòng chọn 'Là khách hàng' hoặc 'Là nhà cung cấp'!")
 
-    #Xử lí giới tính
-        # gender=[]
-        # if Nam.get(): gender.append("Nam")
-        # if Nu.get(): gender.append("Nu")
-        # gender_value = ",".join(gender) if gender else "Không xác định"
-        # return
     if not os.path.exists("employees.csv"):
         messagebox.showerror("Lỗi", "Không tìm thấy tệp dữ liệu!")
         return
@@ -41,9 +35,7 @@ def luu_thong_tin():
         "Là khách hàng": "Có" if khachhang.get() else "Không",
         "Là nhà cung cấp": "Có" if nhacungcap.get() else "Không",
     }
-    # if not all(data.values()):
-    #     messagebox.showerror("Lỗi", "Vui lòng điền đầy đủ thông tin!")
-    #     return
+
     f= open("employees.csv", "a", newline="", encoding="utf-8")
     writer = csv.DictWriter(f, fieldnames=data.keys())
     if f.tell() == 0:
@@ -59,14 +51,11 @@ def xoa_thong_tin():
     unit_entry.delete(0, tk.END)
     title_entry.delete(0, tk.END)
     gender_var.set("")
-    # Nam.set(0)
-    # Nu.set(0)
     dob_entry.delete(0, tk.END)
     id_card_entry.delete(0, tk.END)
     issue_place_entry.delete(0, tk.END)
     issue_date_entry.delete(0, tk.END)
-    # khachhang.set(0)
-    # nhacungcap.set(0)
+
 
 #Hàm hiển thị nhân viên sinh hôm nay
 def sinh_nhat():
@@ -80,8 +69,7 @@ def sinh_nhat():
     if results:
         result_text = "\n".join([f"{r['Mã']} - {r['Tên']}" for r in results])
         messagebox.showinfo("Kết quả", f"Nhân viên sinh nhật hôm nay:\n{result_text}")
-    # else:
-    #     messagebox.showinfo("Kết quả", "Không có nhân viên nào sinh hôm nay!")
+
 
 #Hàm xuất danh sách ra file Excel
 def xuat_ds():
@@ -94,8 +82,7 @@ def xuat_ds():
         if file_path:
             sorted_data.to_excel(file_path, index=False)
             messagebox.showinfo("Thành công", "Xuất danh sách thành công")
-    # except FileNotFoundError:
-    #     messagebox.showerror("Lỗi", "Không tìm thấy file dữ liệu!")
+
     except Exception as e:
         messagebox.showerror("Lỗi", f"Định dạng ngày tháng không hợp lệ: {e}")
 
@@ -121,8 +108,6 @@ title_entry.grid(row=3, column=1, padx=5, pady=5)
 
 tk.Label(root, text="Giới tính").grid(row=4, column=0, padx=5, pady=5)
 gender_var = tk.StringVar()
-# Nam= tk.IntVar()
-# Nu= tk.IntVar()
 tk.Radiobutton(root,text="Nam", variable=gender_var, value="Nam").grid(row=4, column=1)
 tk.Radiobutton(root,text="Nữ", variable=gender_var, value="Nữ").grid(row=4, column=2)
 
@@ -141,7 +126,7 @@ issue_place_entry.grid(row=7, column=1, padx=5, pady=5)
 tk.Label(root, text="Ngày cấp (DD/MM/YYYY):").grid(row=8, column=0, padx=5, pady=5)
 issue_date_entry = tk.Entry(root)
 issue_date_entry.grid(row=8, column=1, padx=5, pady=5)
-#
+
 khachhang = tk.IntVar()
 nhacungcap = tk.IntVar()
 tk.Checkbutton(root,text="Là khách hàng", variable=khachhang).grid(row=9, column=0, padx=5, pady=5)
